@@ -48,16 +48,34 @@ export async function initFaceLandmarker() {
     'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm'
   );
 
-  faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-    baseOptions: {
-      modelAssetPath:
-        'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
-      delegate: 'GPU',
-    },
+  const modelOptions = {
     outputFaceBlendshapes: true,
     runningMode: 'VIDEO',
     numFaces: 2,
-  });
+  };
+
+  try {
+    faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+      ...modelOptions,
+      baseOptions: {
+        modelAssetPath: '/models/face_landmarker.task',
+        delegate: 'GPU',
+      },
+    });
+  } catch (gpuError) {
+    try {
+      faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+        ...modelOptions,
+        baseOptions: {
+          modelAssetPath: '/models/face_landmarker.task',
+          delegate: 'CPU',
+        },
+      });
+    } catch (cpuError) {
+      console.error('Failed to load local Face Landmarker model:', cpuError);
+      throw cpuError;
+    }
+  }
 
   return faceLandmarker;
 }

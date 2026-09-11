@@ -46,21 +46,40 @@ export default function CameraScanner({ onResult, onCancel }) {
         await videoRef.current.play()
       }
 
+      setStatusMsg('Loading face analysis model...')
+
+      // Init MediaPipe local model
+      await initFaceLandmarker()
+
       setCameraState('active')
       setLogStep(2) // "Searching for subject"
       setStatusMsg('Searching for subject...')
-
-      // Init MediaPipe
-      await initFaceLandmarker()
 
       // Begin detection loop
       detectLoop()
 
     } catch (err) {
-      if (err.name === 'NotAllowedError') {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop())
+        streamRef.current = null
+      }
+
+      if (err?.name === 'NotAllowedError') {
         setCameraState('denied')
+        return
+      }
+
+      const message = String(err?.message || '')
+      const isModelFailure =
+        /face_landmarker|FaceLandmarker|Failed to fetch|model/i.test(message) ||
+        err?.name === 'TypeError'
+
+      console.error('Vision setup error:', err)
+
+      if (isModelFailure) {
+        setCameraState('model-error')
+        setStatusMsg('Face model could not load locally. Check the local asset and try again.')
       } else {
-        console.error('Camera error:', err)
         setCameraState('error')
       }
     }
@@ -244,6 +263,22 @@ export default function CameraScanner({ onResult, onCancel }) {
           <div className="error-title">Camera Error</div>
           <div className="error-msg">
             Failed to access camera. Please ensure no other app is using it.
+          </div>
+          <button className="btn-start" onClick={startCamera}>TRY AGAIN</button>
+          <button className="btn-cancel" onClick={onCancel}>← BACK</button>
+        </div>
+      </div>
+    )
+  }
+
+  if (cameraState === 'model-error') {
+    return (
+      <div className="scanner-page">
+        <div className="error-state">
+          <div className="error-icon">🧠</div>
+          <div className="error-title">Face Model Error</div>
+          <div className="error-msg">
+            The local MediaPipe face model could not be loaded. Please verify that the file exists at /models/face_landmarker.task.
           </div>
           <button className="btn-start" onClick={startCamera}>TRY AGAIN</button>
           <button className="btn-cancel" onClick={onCancel}>← BACK</button>
