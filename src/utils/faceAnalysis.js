@@ -81,18 +81,31 @@ export function detectFaces(videoElement) {
  * Returns values in range [0, 1].
  */
 export function extractFrameMetrics(landmarks, blendshapes) {
-  if (!landmarks || landmarks.length === 0) return null;
+  if (!Array.isArray(landmarks) || landmarks.length === 0) return null;
 
-  const lm = landmarks[0]; // first face only
+  const faceLandmarks = Array.isArray(landmarks[0]) ? landmarks[0] : landmarks;
+  if (!Array.isArray(faceLandmarks) || faceLandmarks.length === 0) return null;
 
-  const dist = (a, b) => {
-    const dx = lm[a].x - lm[b].x;
-    const dy = lm[a].y - lm[b].y;
+  const pointAt = (index) => {
+    const point = faceLandmarks[index];
+    if (!point || typeof point.x !== 'number' || typeof point.y !== 'number') {
+      return null;
+    }
+    return point;
+  };
+
+  const dist = (aIndex, bIndex) => {
+    const a = pointAt(aIndex);
+    const b = pointAt(bIndex);
+    if (!a || !b) return 0;
+
+    const dx = a.x - b.x;
+    const dy = a.y - b.y;
     return Math.sqrt(dx * dx + dy * dy);
   };
 
-  // Face height for normalization
   const faceHeight = dist(LANDMARKS.FOREHEAD, LANDMARKS.CHIN) || 0.3;
+  if (faceHeight <= 0.0001) return null;
 
   // Mouth openness (vertical gap / face height)
   const mouthOpenness = dist(LANDMARKS.MOUTH_TOP, LANDMARKS.MOUTH_BOTTOM) / faceHeight;
@@ -108,15 +121,17 @@ export function extractFrameMetrics(landmarks, blendshapes) {
   const eyebrowRaise = (leftBrowRaise + rightBrowRaise) / 2;
 
   // Head tilt: difference between left/right face edges Y
-  const headTilt = Math.abs(lm[LANDMARKS.FACE_LEFT].y - lm[LANDMARKS.FACE_RIGHT].y);
+  const leftFaceY = pointAt(LANDMARKS.FACE_LEFT)?.y ?? 0.5;
+  const rightFaceY = pointAt(LANDMARKS.FACE_RIGHT)?.y ?? 0.5;
+  const headTilt = Math.abs(leftFaceY - rightFaceY);
 
   // Head X position (normalized 0–1)
-  const headX = lm[LANDMARKS.NOSE_TIP].x;
+  const headX = pointAt(LANDMARKS.NOSE_TIP)?.x ?? 0.5;
 
   // Smile: use blendshape if available, else approximate from mouth width
   let smileScore = 0;
-  if (blendshapes && blendshapes.length > 0) {
-    const shapes = blendshapes[0].categories || [];
+  if (Array.isArray(blendshapes) && blendshapes.length > 0) {
+    const shapes = blendshapes[0]?.categories || [];
     const leftSmile = shapes.find((s) => s.categoryName === 'mouthSmileLeft')?.score || 0;
     const rightSmile = shapes.find((s) => s.categoryName === 'mouthSmileRight')?.score || 0;
     smileScore = (leftSmile + rightSmile) / 2;

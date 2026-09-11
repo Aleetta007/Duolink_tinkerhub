@@ -94,16 +94,18 @@ export default function CameraScanner({ onResult, onCancel }) {
       setFaceCount(count)
 
       if (count === 1 && !analysisDoneRef.current) {
-        // Draw landmarks
-        drawLandmarks(canvas, video, result)
+        const faceLandmarks = result.faceLandmarks?.[0]
+        if (Array.isArray(faceLandmarks) && faceLandmarks.length > 0) {
+          // Draw landmarks
+          drawLandmarks(canvas, video, result)
 
-        // Collect frame metrics
-        const metrics = extractFrameMetrics(
-          result.faceLandmarks[0],
-          result.faceBlendshapes
-        )
-        if (metrics) {
-          frameHistoryRef.current.push(metrics)
+          // Collect frame metrics
+          const metrics = extractFrameMetrics(faceLandmarks, result.faceBlendshapes)
+          if (metrics) {
+            frameHistoryRef.current.push(metrics)
+          }
+        } else {
+          clearCanvas(canvas)
         }
 
         // If we haven't started collection timer, start it
