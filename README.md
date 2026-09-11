@@ -1,103 +1,132 @@
 <img width="1280" height="640" alt="git (1)" src="https://github.com/user-attachments/assets/8920b256-2ba8-4988-b824-5351134eb4bd" />
 
+# 🐔 Kozhitharam Detector™
 
-
-# [Project Name] 🎯
-
+> *"Because some things absolutely need to be measured."*
 
 ## Basic Details
-### Team Name: [Name]
 
+### Team Name: Kozhitharam Research Analytics
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Aleetta Viju — [College]
+- Member 2: [Name] — [College]
+- Member 3: [Name] — [College]
 
 ### Project Description
-[2-3 lines about what your project does]
+
+An advanced AI-powered Kozhitharam Detection System that uses real-time computer vision (MediaPipe Face Landmarker) to analyze a person's face and compute their fictional **Kozhitharam Score™** — a completely made-up metric that serves no scientific purpose whatsoever.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+
+Society has long struggled with identifying Kozhitharam in everyday life. Traditional methods (asking, guessing, chicken-related intuition) have proven unreliable. Until now, there was no objective, algorithmic, computer-vision-based way to measure how much Kozhitharam a person possesses.
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+
+We built a sophisticated-looking AI dashboard that uses real MediaPipe facial landmark detection to extract measurable quantities from your face (eye openness, mouth activity, eyebrow movement, head tilt), feeds them into the **Advanced Kozhitharam Algorithm™**, and produces an official score between 0% and 100%. The result is presented with full scientific gravitas, a dramatic Malayalam verdict, and a downloadable official certificate.
+
+---
 
 ## Technical Details
-### Technologies/Components Used
-For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+### Technologies/Components Used
+
+**For Software:**
+- **Languages:** JavaScript (ES2022+), JSX, CSS3
+- **Frameworks:** React 18, Vite 5
+- **Libraries:**
+  - `@mediapipe/tasks-vision` — real-time face landmarker (478 points)
+  - `jsPDF` — client-side PDF certificate generation
+- **Tools:** Node.js, npm, Git
 
 ### Implementation
-For Software:
-# Installation
-[commands]
 
-# Run
-[commands]
+#### Installation
 
-### Project Documentation
-For Software:
+```bash
+npm install
+```
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+#### Development
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+```bash
+npm run dev
+```
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+Open [http://localhost:5173](http://localhost:5173)
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
+#### Production Build
 
-For Hardware:
+```bash
+npm run build
+npm run preview
+```
 
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
+---
 
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
+## Features
 
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
+- ✅ Real-time webcam face detection using MediaPipe
+- ✅ Facial landmark visualization (478 points)
+- ✅ Fictional Kozhitharam scoring algorithm
+- ✅ 6 progressive classification tiers (Kunjikkozhi → Kozhitharam Overload)
+- ✅ Animated score reveal with breakdown bars
+- ✅ Original Malayalam comedy verdicts
+- ✅ Audio reaction system (sound-on/off toggle)
+- ✅ Downloadable PDF Kozhitharam Certificate
+- ✅ Fully browser-based — no server, no data upload
+- ✅ Dark futuristic AI dashboard UI
+- ✅ Responsive design
 
-![Build](Add photos of build process here)
-*Explain the build steps*
+---
 
-![Final](Add photo of final product here)
-*Explain the final build*
+## Project Documentation
 
-### Project Demo
-# Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+### Screenshots
 
-# Additional Demos
-[Add any extra demo materials/links]
+*(Add screenshots here after taking them)*
+
+![Landing Page](Add screenshot of landing page here)
+*The landing page with futuristic dark UI and START ANALYSIS button*
+
+![Face Scanner](Add screenshot of face scanner here)
+*Live camera feed with facial landmark overlay and scanning HUD*
+
+![Result Screen](Add screenshot of result screen here)
+*Score reveal with animated breakdown and verdict*
+
+### User Flow
+
+```
+Landing Page → START ANALYSIS → Camera Permission → Face Scanner
+→ Face Detected → Facial Landmark Analysis → Fake Scientific Analysis
+→ Kozhitharam Score → Classification → Detailed Report
+→ Malayalam Verdict → Download Certificate → Scan Again
+```
+
+---
+
+## Privacy
+
+> 🔒 Camera processing occurs **locally in your browser**. No face images or video are uploaded, stored, or transmitted. All computation happens on-device using MediaPipe's WASM runtime.
+
+---
+
+## Disclaimer
+
+> The Kozhitharam Score™ is entirely fictional and is intended purely for entertainment at the TinkerHub Useless Projects event. It has no scientific validity. Do not make life decisions based on your Kozhitharam Score.
+
+---
 
 ## Team Contributions
+
 - [Name 1]: [Specific contributions]
 - [Name 2]: [Specific contributions]
 - [Name 3]: [Specific contributions]
 
 ---
-Made with ❤️ at TinkerHub Useless Projects 
+
+Made with ❤️ at TinkerHub Useless Projects
 
 ![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
 ![Static Badge](https://img.shields.io/badge/UselessProjects--26-26?link=https%3A%2F%2Ftinkerhub.org%2Fevents%2F1M8ORET9A1%2Fuseless-projects-3.0)
-
-
-
