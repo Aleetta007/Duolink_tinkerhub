@@ -9,9 +9,8 @@
 ### Team Name: Kozhitharam Research Analytics
 
 ### Team Members
-- Team Lead: Aleetta Viju — [College]
-- Member 2: [Name] — [College]
-- Member 3: [Name] — [College]
+- Team Lead: Aleetta Viju — SAHRDAYA COLLEGE OF ENGINEERING AND TECHNOLOGY
+- Member 2: Aleena Shiju — SAHRDAYA COLLEGE OF ENGINEERING AND TECHNOLOGY
 
 ### Project Description
 
@@ -84,16 +83,32 @@ npm run preview
 
 ### Screenshots
 
-*(Add screenshots here after taking them)*
+*(Visual walkthrough of the app)*
 
-![Landing Page](Add screenshot of landing page here)
-*The landing page with futuristic dark UI and START ANALYSIS button*
+<!-- 1. Landing Page -->
+![Landing Page](screenshots/landing.png)
+The landing page with the START ANALYSIS button and project intro.
 
-![Face Scanner](Add screenshot of face scanner here)
-*Live camera feed with facial landmark overlay and scanning HUD*
+<!-- 2. Face Scanning -->
+![Face Scanning](screenshots/scanning.png)
+Live camera feed with facial landmark overlay and scanning HUD.
 
-![Result Screen](Add screenshot of result screen here)
-*Score reveal with animated breakdown and verdict*
+<!-- 3. Analysis -->
+![Analysis](screenshots/analysis.png)
+Ongoing analysis view showing progress and metric extraction.
+
+<!-- 4. Kozhitharam Result -->
+![Kozhitharam Result](screenshots/result.png)
+Final score reveal with breakdown bars and Malayalam verdict.
+
+<!-- 5. Generated Certificate -->
+![Generated Certificate](screenshots/certificate.png)
+Preview of the downloadable Kozhitharam certificate PDF.
+
+### Demo Video
+
+Watch the demo video: [screenshots/demo/kozhi-demo.mp4](screenshots/demo/kozhi-demo.mp4)
+Short walkthrough of the app and its features.
 
 ### User Flow
 
@@ -120,9 +135,8 @@ Landing Page → START ANALYSIS → Camera Permission → Face Scanner
 
 ## Team Contributions
 
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- Aleetta Viju: [Specific contributions]
+- Aleena Shiju: [Specific contributions]
 
 ---
 

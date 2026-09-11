@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { getCategoryForScore } from '../data/scoreCategories'
-import { playSound } from '../utils/audio'
+import { playSound, playLoop, stopSound } from '../utils/audio'
 import VerdictCard from './VerdictCard'
 import ScoreBreakdown from './ScoreBreakdown'
 import CertificateForm from './CertificateForm'
@@ -31,8 +31,10 @@ export default function ResultScreen({ result, onScanAgain }) {
       } else {
         setDisplayScore(total)
         setRevealed(true)
-        // Play result audio
+        // Play result audio (short category chime)
         playSound(category.audioKey)
+        // Start the Kozhi reaction loop (user-provided long clip)
+        playLoop('kozhi-reaction')
       }
     }
 
@@ -80,7 +82,11 @@ export default function ResultScreen({ result, onScanAgain }) {
       <div className="result-actions fade-in">
         <button
           className="btn-scan-again"
-          onClick={onScanAgain}
+          onClick={() => {
+            // Stop and reset reaction audio when scanning again
+            try { stopSound('kozhi-reaction') } catch {}
+            onScanAgain()
+          }}
           aria-label="Scan another person"
         >
           🔄 SCAN AGAIN

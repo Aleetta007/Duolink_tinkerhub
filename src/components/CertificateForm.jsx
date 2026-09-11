@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { generateCertificate } from '../utils/certificate'
+import { stopSound } from '../utils/audio'
 
 export default function CertificateForm({ score, category }) {
   const [name, setName]         = useState('')
@@ -8,6 +9,8 @@ export default function CertificateForm({ score, category }) {
 
   async function handleGenerate() {
     if (!name.trim()) return
+    // Stop reaction audio immediately when user generates certificate
+    try { stopSound('kozhi-reaction') } catch {}
     setGenerating(true)
     try {
       await generateCertificate({

@@ -17,6 +17,7 @@ const SOUND_FILES = {
   'medium-score': '/sounds/medium-score.mp3',
   'high-score': '/sounds/high-score.mp3',
   'extreme-score': '/sounds/extreme-score.mp3',
+  'kozhi-reaction': '/sounds/kozhi-reaction.mp3',
 };
 
 function getAudio(key) {
@@ -25,6 +26,10 @@ function getAudio(key) {
   if (!cache[key]) {
     const audio = new Audio(src);
     audio.preload = 'auto';
+    // For reaction-style sounds we may want seamless looping
+    // but default to the HTMLAudio loop flag and rely on the
+    // browser's autoplay handling. The cache keeps a single
+    // audio instance per key so re-renders won't recreate it.
     cache[key] = audio;
   }
   return cache[key];
@@ -35,6 +40,8 @@ export function playSound(key) {
   try {
     const audio = getAudio(key);
     if (!audio) return;
+    // Ensure non-looping playback for short sounds
+    try { audio.loop = false } catch {}
     audio.currentTime = 0;
     const promise = audio.play();
     if (promise) {
@@ -47,10 +54,30 @@ export function playSound(key) {
   }
 }
 
+// Play the given sound continuously in a loop until stopped.
+export function playLoop(key) {
+  if (muted) return;
+  try {
+    const audio = getAudio(key);
+    if (!audio) return;
+    // If already playing, do nothing
+    if (!audio.paused && !audio.ended) return;
+    audio.loop = true;
+    audio.currentTime = 0;
+    const promise = audio.play();
+    if (promise) promise.catch(() => {
+      // Autoplay blocked — fail gracefully
+    });
+  } catch {
+    // ignore
+  }
+}
+
 export function stopSound(key) {
   try {
     const audio = cache[key];
     if (audio) {
+      try { audio.loop = false } catch {}
       audio.pause();
       audio.currentTime = 0;
     }
